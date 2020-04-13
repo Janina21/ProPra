@@ -17,20 +17,19 @@ class Main:
 
     def test(self):
         self.room.wallAdministration.split_horizontal_and_vertical_walls()
-        self.room.wallAdministration.set_range_for_horizontal_walls()
-        self.room.wallAdministration.set_range_for_vertical_walls()
         self.room.wallAdministration.find_all_definitely_north_walls()
         self.room.wallAdministration.find_all_definitely_south_walls()
-        for i in range(len(self.room.wallAdministration.north_walls)):
-            print(self.room.wallAdministration.north_walls[i].get_range())
+        for i in range(len(self.room.wallAdministration.horizontalWallAdministration.north_walls)):
+            print(
+                self.room.wallAdministration.horizontalWallAdministration.north_walls[i].get_range())
         print("----------------------------------------------------------------")
         # for j in range(len(self.room.wallAdministration.south_walls)):
         #     print(self.room.wallAdministration.south_walls[j].get_range())
-        adjacent_walls = self.room.wallAdministration.find_adjacent_walls(
-            self.room.wallAdministration.north_walls, self.room.wallAdministration.horizontal_walls)
+        # adjacent_walls = self.room.wallAdministration.find_adjacent_walls(
+        #     self.room.wallAdministration.north_walls, self.room.wallAdministration.horizontal_walls)
 
-        for key in range(len(adjacent_walls)):
-            print(key)
+        # for key in range(len(adjacent_walls)):
+        #     print(key)
 
 
 m = Main()
