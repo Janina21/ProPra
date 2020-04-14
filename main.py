@@ -9,27 +9,19 @@ class Main:
     def __init__(self):
 
         self.room = Room(self.input)
+
         self.showRoom()
-        self.test()
+        self.show_sub_rectangles()
 
     def showRoom(self):
         return self.room.draw()
 
-    def test(self):
-        self.room.wallAdministration.split_horizontal_and_vertical_walls()
-        self.room.wallAdministration.find_all_definitely_north_walls()
-        self.room.wallAdministration.find_all_definitely_south_walls()
-        for i in range(len(self.room.wallAdministration.horizontalWallAdministration.north_walls)):
-            print(
-                self.room.wallAdministration.horizontalWallAdministration.north_walls[i].get_range())
-        print("----------------------------------------------------------------")
-        # for j in range(len(self.room.wallAdministration.south_walls)):
-        #     print(self.room.wallAdministration.south_walls[j].get_range())
-        # adjacent_walls = self.room.wallAdministration.find_adjacent_walls(
-        #     self.room.wallAdministration.north_walls, self.room.wallAdministration.horizontal_walls)
-
-        # for key in range(len(adjacent_walls)):
-        #     print(key)
+    def show_sub_rectangles(self):
+        self.room.wallAdministration.get_definite_walls()
+        self.room.wallAdministration.north_search()
+        self.room.wallAdministration.south_search()
+        self.room.wallAdministration.east_search()
+        self.room.wallAdministration.west_search()
 
 
 m = Main()
