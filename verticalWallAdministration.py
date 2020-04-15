@@ -3,12 +3,13 @@ class VerticalWallAdministration:
     east_walls = []
     west_walls = []
 
-    def get_all_walls_between_range(self, length):
+    def get_all_walls_between_range(self, wall, length):
 
         all_walls_between_range = []
         for i in range(len(self.vertical_walls)):
-            if self.vertical_walls[i].get_range()[0] < length[1] and self.vertical_walls[i].get_range()[1] > length[0]:
-                all_walls_between_range.append(self.vertical_walls[i])
+            if not self.vertical_walls[i] == wall:
+                if self.vertical_walls[i].get_range()[0] < length[1] and self.vertical_walls[i].get_range()[1] > length[0]:
+                    all_walls_between_range.append(self.vertical_walls[i])
 
         return all_walls_between_range
 
@@ -27,10 +28,10 @@ class VerticalWallAdministration:
                       wall.get_coordinate2()[1]]
             wall.set_range(length)
 
-     def separate_north_and_south_walls(self):
+    def separate_west_and_east_walls(self):
 
         west_wall = self.get_west_wall()
-        # print(west_wall.get_range())
+
         rest = self.find_east_walls(west_wall, west_wall.get_range())
         if not rest == None and len(rest) > 0:
             for i in range(len(rest)):
@@ -72,6 +73,8 @@ class VerticalWallAdministration:
             if self.vertical_walls[j].get_coordinate1()[0] < west_wall.get_coordinate1()[0]:
 
                 west_wall = self.vertical_walls[j]
+        if not west_wall in self.west_walls:
+            self.west_walls.append(west_wall)
 
         self.vertical_walls.remove(west_wall)
         return west_wall

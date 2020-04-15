@@ -26,9 +26,23 @@ class WallAdministration:
         self.verticalWallAdministration.set_start_ranges()
         while len(self.horizontalWallAdministration.horizontal_walls) > 0:
             self.horizontalWallAdministration.separate_north_and_south_walls()
-        for i in range(len(self.horizontalWallAdministration.get_south_walls())):
-            print(self.horizontalWallAdministration.get_south_walls()
+        # for i in range(len(self.horizontalWallAdministration.get_north_walls())):
+        #     print(self.horizontalWallAdministration.get_north_walls()
+        #           [i].get_range())
+        # print("--------------------------------------------------------------------")
+        while len(self.verticalWallAdministration.vertical_walls) > 0:
+            self.verticalWallAdministration.separate_west_and_east_walls()
+        # for i in range(len(self.verticalWallAdministration.get_east_walls())):
+        #     print(self.verticalWallAdministration.get_east_walls()
+        #           [i].get_range())
+        self.horizontalWallAdministration.set_new_ranges_for_north_walls()
+        for i in range(len(self.horizontalWallAdministration.get_north_walls())):
+            print(self.horizontalWallAdministration.get_north_walls()
                   [i].get_range())
+            print(self.horizontalWallAdministration.get_north_walls()
+                  [i].get_new_range())
+            print(
+                "-------------------------------------------------------------------------")
 
     def north_search(self):
         pass
