@@ -17,7 +17,7 @@ class Main:
         return self.room.draw()
 
     def show_sub_rectangles(self):
-        self.room.wallAdministration.get_definite_walls()
+        self.room.wallAdministration.split_horizontal_and_vertical_walls()
         self.room.wallAdministration.north_search()
         self.room.wallAdministration.south_search()
         self.room.wallAdministration.east_search()

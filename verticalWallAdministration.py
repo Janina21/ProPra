@@ -27,36 +27,54 @@ class VerticalWallAdministration:
                       wall.get_coordinate2()[1]]
             wall.set_range(length)
 
-    def find_all_definitely_east_walls(self):
+     def separate_north_and_south_walls(self):
+
+        west_wall = self.get_west_wall()
+        # print(west_wall.get_range())
+        rest = self.find_east_walls(west_wall, west_wall.get_range())
+        if not rest == None and len(rest) > 0:
+            for i in range(len(rest)):
+                self.find_east_walls(west_wall, rest[i])
+
+    def find_east_walls(self, wall, search_range):
+        search_ranges = []
+        walls_in_same_range = self.get_all_walls_between_range(
+            wall, search_range)
+        if len(walls_in_same_range) > 0:
+            east_wall = walls_in_same_range[0]
+
+            for j in range(len(walls_in_same_range)):
+                if (walls_in_same_range[j].get_coordinate1()[0] - wall.get_coordinate1()[0]) < (east_wall.get_coordinate1()[0] - wall.get_coordinate1()[0]):
+                    east_wall = walls_in_same_range[j]
+            if not east_wall in self.east_walls:
+                self.east_walls.append(east_wall)
+            self.vertical_walls.remove(east_wall)
+
+            # wenn die Ostwand noch nicht die komplette range der Westwand abdeckt, dann gibt es noch mehr Ostwände in der range
+            if east_wall.get_range()[0] > wall.get_range()[0] or east_wall.get_range()[1] < wall.get_range()[1]:
+
+                if east_wall.get_range()[0] > wall.get_range()[0]:
+                    search_ranges.append(
+                        [wall.get_range()[0], east_wall.get_range()[0]])
+
+                if east_wall.get_range()[1] < wall.get_range()[1]:
+                    search_ranges.append(
+                        [east_wall.get_range()[1], wall.get_range()[1]])
+            return search_ranges
+
+    def get_west_wall(self):
 
         self.bring_all_ranges_in_right_order()
 
-        for i in range(len(self.vertical_walls)):
-            east_wall = self.vertical_walls[i]
-            vertical_walls_in_same_range = self.get_all_walls_between_range(
-                self.get_walls()[i].get_range())
-            for j in range(len(vertical_walls_in_same_range)):
-                if vertical_walls_in_same_range[j].get_coordinate1()[0] > east_wall.get_coordinate1()[0]:
+        west_wall = self.vertical_walls[0]
 
-                    east_wall = vertical_walls_in_same_range[j]
+        for j in range(len(self.vertical_walls)):
+            if self.vertical_walls[j].get_coordinate1()[0] < west_wall.get_coordinate1()[0]:
 
-            if east_wall not in self.east_walls:
-                self.append_east_wall(east_wall)
+                west_wall = self.vertical_walls[j]
 
-    def find_all_definitely_west_walls(self):
-
-        self.bring_all_ranges_in_right_order()
-
-        for i in range(len(self.vertical_walls)):
-            south_wall = self.vertical_walls[i]
-            vertical_walls_in_same_range = self.get_all_walls_between_range(
-                self.vertical_walls[i].get_range())
-            for j in range(len(vertical_walls_in_same_range)):
-                if vertical_walls_in_same_range[j].get_coordinate1()[1] < south_wall.get_coordinate1()[1]:
-
-                    south_wall = vertical_walls_in_same_range[j]
-            if south_wall not in self.west_walls:
-                self.append_west_wall(south_wall)
+        self.vertical_walls.remove(west_wall)
+        return west_wall
 
     def get_walls(self):
         return self.vertical_walls
