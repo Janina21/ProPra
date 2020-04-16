@@ -43,6 +43,15 @@ class WallAdministration:
                   [i].get_new_range())
             print(
                 "-------------------------------------------------------------------------")
+        print("nextnextnextnextnextnextnextnextnextnextnextnextnextnextnextnextnextnextnextnextnextnextnextnextnextnextnextnext")
+        self.horizontalWallAdministration.set_new_ranges_for_south_walls()
+        for i in range(len(self.horizontalWallAdministration.get_south_walls())):
+            print(self.horizontalWallAdministration.get_south_walls()
+                  [i].get_range())
+            print(self.horizontalWallAdministration.get_south_walls()
+                  [i].get_new_range())
+            print(
+                "-------------------------------------------------------------------------")
 
     def north_search(self):
         pass

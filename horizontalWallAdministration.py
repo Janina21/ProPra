@@ -90,15 +90,15 @@ class HorizontalWallAdministration:
 
         for i in range(len(self.north_walls)):
 
-            closest_west_wall = self.find_closest_west_wall(
+            closest_west_wall = self.find_closest_west_wall_for_north_wall(
                 self.north_walls[i])
-            closest_east_wall = self.find_closest_east_wall(
+            closest_east_wall = self.find_closest_east_wall_for_north_wall(
                 self.north_walls[i])
 
             self.north_walls[i].set_new_range([closest_west_wall.get_coordinate1()[
                                               0], closest_east_wall.get_coordinate1()[0]])
 
-    def find_closest_west_wall(self, wall):
+    def find_closest_west_wall_for_north_wall(self, wall):
 
         closest_west_wall = None
 
@@ -106,11 +106,17 @@ class HorizontalWallAdministration:
 
             if self.verticalWallAdministration.get_west_walls()[i].get_coordinate2()[1] == wall.get_coordinate1()[1] or (self.verticalWallAdministration.get_west_walls()[i].get_coordinate1()[1] < wall.get_coordinate1()[1] and self.verticalWallAdministration.get_west_walls()[i].get_coordinate2()[1] > wall.get_coordinate1()[1]):
                 if self.verticalWallAdministration.get_west_walls()[i].get_coordinate1()[0] <= wall.get_coordinate1()[0]:
-                    closest_west_wall = self.verticalWallAdministration.get_west_walls()[
-                        i]
+                    if self.verticalWallAdministration.get_west_walls()[i].get_coordinate2()[1] == wall.get_coordinate1()[1]:
+                        closest_west_wall = self.verticalWallAdministration.get_west_walls()[
+                            i]
+                        return closest_west_wall
+                    else:
+                        closest_west_wall = self.verticalWallAdministration.get_west_walls()[
+                            i]
+
         return closest_west_wall
 
-    def find_closest_east_wall(self, wall):
+    def find_closest_east_wall_for_north_wall(self, wall):
 
         closest_east_wall = None
         for i in range(len(self.verticalWallAdministration.get_east_walls())):
@@ -118,9 +124,64 @@ class HorizontalWallAdministration:
             if self.verticalWallAdministration.get_east_walls()[i].get_coordinate1()[1] == wall.get_coordinate2()[1] or (self.verticalWallAdministration.get_east_walls()[i].get_coordinate1()[1] < wall.get_coordinate2()[1] and self.verticalWallAdministration.get_east_walls()[i].get_coordinate2()[1] > wall.get_coordinate2()[1]):
 
                 if self.verticalWallAdministration.get_east_walls()[i].get_coordinate1()[0] >= wall.get_coordinate2()[0]:
+                    if self.verticalWallAdministration.get_east_walls()[i].get_coordinate1()[1] == wall.get_coordinate2()[1]:
 
-                    closest_east_wall = self.verticalWallAdministration.get_east_walls()[
-                        i]
+                        closest_east_wall = self.verticalWallAdministration.get_east_walls()[
+                            i]
+                        return closest_east_wall
+                    else:
+                        closest_east_wall = self.verticalWallAdministration.get_east_walls()[
+                            i]
+
+        return closest_east_wall
+
+    def set_new_ranges_for_south_walls(self):
+
+        for i in range(len(self.south_walls)):
+
+            closest_west_wall = self.find_closest_west_wall_for_south_wall(
+                self.south_walls[i])
+            closest_east_wall = self.find_closest_east_wall_for_south_wall(
+                self.south_walls[i])
+
+            self.south_walls[i].set_new_range([closest_west_wall.get_coordinate1()[
+                0], closest_east_wall.get_coordinate1()[0]])
+
+    def find_closest_west_wall_for_south_wall(self, wall):
+
+        closest_west_wall = None
+
+        for i in range(len(self.verticalWallAdministration.get_west_walls())):
+
+            if self.verticalWallAdministration.get_west_walls()[i].get_coordinate1()[1] == wall.get_coordinate1()[1] or (self.verticalWallAdministration.get_west_walls()[i].get_coordinate1()[1] < wall.get_coordinate1()[1] and self.verticalWallAdministration.get_west_walls()[i].get_coordinate2()[1] > wall.get_coordinate1()[1]):
+                if self.verticalWallAdministration.get_west_walls()[i].get_coordinate1()[0] <= wall.get_coordinate1()[0]:
+                    if self.verticalWallAdministration.get_west_walls()[i].get_coordinate1()[1] == wall.get_coordinate1()[1]:
+
+                        closest_west_wall = self.verticalWallAdministration.get_west_walls()[
+                            i]
+                        return closest_west_wall
+                    else:
+                        closest_west_wall = self.verticalWallAdministration.get_west_walls()[
+                            i]
+
+        return closest_west_wall
+
+    def find_closest_east_wall_for_south_wall(self, wall):
+
+        closest_east_wall = None
+        for i in range(len(self.verticalWallAdministration.get_east_walls())):
+
+            if self.verticalWallAdministration.get_east_walls()[i].get_coordinate2()[1] == wall.get_coordinate2()[1] or (self.verticalWallAdministration.get_east_walls()[i].get_coordinate2()[1] < wall.get_coordinate2()[1] and self.verticalWallAdministration.get_east_walls()[i].get_coordinate1()[1] > wall.get_coordinate2()[1]):
+
+                if self.verticalWallAdministration.get_east_walls()[i].get_coordinate1()[0] >= wall.get_coordinate2()[0]:
+                    if self.verticalWallAdministration.get_east_walls()[i].get_coordinate2()[1] == wall.get_coordinate2()[1]:
+                        closest_east_wall = self.verticalWallAdministration.get_east_walls()[
+                            i]
+                        return closest_east_wall
+                    else:
+                        closest_east_wall = self.verticalWallAdministration.get_east_walls()[
+                            i]
+
         return closest_east_wall
 
     def get_walls(self):
